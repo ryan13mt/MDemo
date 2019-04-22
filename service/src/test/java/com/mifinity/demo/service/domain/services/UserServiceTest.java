@@ -39,6 +39,13 @@ public class UserServiceTest {
         final ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userDao, times(1)).getUserByUserName(user.getUsername());
         verify(userDao, times(1)).createUser(userArgumentCaptor.capture());
+
+        final User unsavedUser = userArgumentCaptor.getValue();
+        assertThat(unsavedUser.getId()).isEqualTo(savedUser.getId());
+        assertThat(unsavedUser.getUsername()).isEqualTo(savedUser.getUsername());
+        assertThat(unsavedUser.getPassword()).isEqualTo(savedUser.getPassword());
+        assertThat(unsavedUser.getType()).isEqualTo(savedUser.getType());
+
     }
 
     @Test(expected = IllegalStateException.class)
@@ -53,6 +60,12 @@ public class UserServiceTest {
         final ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userDao, times(1)).getUserByUserName(user.getUsername());
         verify(userDao, times(1)).createUser(userArgumentCaptor.capture());
+
+        final User unsavedUser = userArgumentCaptor.getValue();
+        assertThat(unsavedUser.getId()).isEqualTo(savedUser.getId());
+        assertThat(unsavedUser.getUsername()).isEqualTo(savedUser.getUsername());
+        assertThat(unsavedUser.getPassword()).isEqualTo(savedUser.getPassword());
+        assertThat(unsavedUser.getType()).isEqualTo(savedUser.getType());
     }
 
 }

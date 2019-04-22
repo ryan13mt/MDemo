@@ -39,6 +39,13 @@ public class CardServiceTest {
         final ArgumentCaptor<Card> cardArgumentCaptor = ArgumentCaptor.forClass(Card.class);
         verify(cardDao, times(1)).findByNumberEquals(card.getNumber());
         verify(cardDao, times(1)).save(cardArgumentCaptor.capture());
+
+        final Card unsavedCard = cardArgumentCaptor.getValue();
+        assertThat(unsavedCard.getId()).isEqualTo(savedCard.getId());
+        assertThat(unsavedCard.getNumber()).isEqualTo(savedCard.getNumber());
+        assertThat(unsavedCard.getExpiry()).isEqualTo(savedCard.getExpiry());
+        assertThat(unsavedCard.getName()).isEqualTo(savedCard.getName());
+        assertThat(unsavedCard.getAccountId()).isEqualTo(savedCard.getAccountId());
     }
 
     @Test
@@ -56,6 +63,13 @@ public class CardServiceTest {
         final ArgumentCaptor<Card> cardArgumentCaptor = ArgumentCaptor.forClass(Card.class);
         verify(cardDao, times(1)).findByNumberEquals(oldCard.getNumber());
         verify(cardDao, times(1)).save(cardArgumentCaptor.capture());
+
+        final Card unsavedCard = cardArgumentCaptor.getValue();
+        assertThat(unsavedCard.getId()).isEqualTo(savedCard.getId());
+        assertThat(unsavedCard.getNumber()).isEqualTo(savedCard.getNumber());
+        assertThat(unsavedCard.getExpiry()).isEqualTo(savedCard.getExpiry());
+        assertThat(unsavedCard.getName()).isEqualTo(savedCard.getName());
+        assertThat(unsavedCard.getAccountId()).isEqualTo(savedCard.getAccountId());
     }
 
 }

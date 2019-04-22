@@ -50,13 +50,23 @@ public class CardDaoIT {
     }
 
     @Test
-    public void filterCardsForUser_shouldReturnCards() {
+    public void filterCardsForUser_emptyFilter_shouldReturnCards() {
         final User user = entityManager.persistAndFlush(UserTestWrapper.buildValidAndNewWithUsername("user").unwrap());
         final Card card1 = entityManager.persistAndFlush(CardTestWrapper.buildValidAndNewWithAccountIdAndCardNumber(user.getId(), "11").unwrap());
         final Card card2 = entityManager.persistAndFlush(CardTestWrapper.buildValidAndNewWithAccountIdAndCardNumber(user.getId(), "22").unwrap());
 
         final List<Card> cardsForUser = sut.filterCardsForUser(CardFilter.builder().accountId(user.getId()).build());
         assertThat(cardsForUser).containsExactly(card1, card2);
+    }
+
+    @Test
+    public void filterCardsForUser_filterIncluded_shouldReturnOneCard() {
+        final User user = entityManager.persistAndFlush(UserTestWrapper.buildValidAndNewWithUsername("user").unwrap());
+        final Card card1 = entityManager.persistAndFlush(CardTestWrapper.buildValidAndNewWithAccountIdAndCardNumber(user.getId(), "11").unwrap());
+        final Card card2 = entityManager.persistAndFlush(CardTestWrapper.buildValidAndNewWithAccountIdAndCardNumber(user.getId(), "22").unwrap());
+
+        final List<Card> cardsForUser = sut.filterCardsForUser(CardFilter.builder().accountId(user.getId()).cardNumberFilter("1").build());
+        assertThat(cardsForUser).containsExactly(card1);
     }
 
     @Test
