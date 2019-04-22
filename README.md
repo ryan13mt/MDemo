@@ -13,11 +13,11 @@ Login page contains two separate forms. One for login and the other for registra
 
 Submitting a registration form successfully will take the user into a page that is not used that will display the JSON out from the api request. Please go back to the previous page and proceed with loging in with the new user to access the application. Or use admin credentials to access with admin rights.
 
-Successfully loging in will take user to main page. This includes a form to create a new card. Like the user registration, i have only included simple validation in this form. Fields must not be empty and the expiry field should be in a pattern of "00/00". Further improvement on the validation might be to really validate the months to not be above 12 for example. Also please note i am storing card numbers as a plain string. In a real world scenario these will be encrypted or storing the first four and last six digits only for extra security to the users. 
+Successfully loging in will take user to main page. This includes a form to create a new card. Like the user registration, i have only included simple validation in this form. Fields must not be empty and the expiry field should be in a pattern of "00/00". Further improvement on the validation might be to really validate the months to not be above 12 for example. Validation checks that can be added easily as well are name length and card number length but were not added since these will mainly depend on requirements that where not given. Also please note i am storing card numbers as a plain string. In a real world scenario these will be encrypted or storing the first four and last six digits only for extra security to the users. 
 
 After creating new card successfully, please go back to the previous page to continue.
 
-Clicking 'Search Cards' will take user to another page where a search field can be used to search for cards. Admin can view all cards in the system. Newly created users can search for their own cards only. Searching for cards will take user to page only showing the JSON output from the api request just for simplicity of the frontend. 
+Clicking 'Search Cards' will take user to another page where a search field can be used to search for cards. Admin can view all cards in the system. Newly created users can search for their own cards only. Searching for cards will take user to page only showing the JSON output from the api request just for simplicity of the frontend. Search will return a list of cards that contain the string the user is filtering by.  
 
 
 ###Architecture
