@@ -1,6 +1,7 @@
 # MDemo
 
-###How to run
+### How to run
+
 To run application, either load it into Intellij or any other IDE and run "DemoApplication" or package application and then run jar.
 
 After loading go to http://localhost:26000/ to find web application. Please note very little effort was given to the frontend since this is not the focus of the assessment.
@@ -20,6 +21,7 @@ After creating new card successfully, please go back to the previous page to con
 Clicking 'Search Cards' will take user to another page where a search field can be used to search for cards. Admin can view all cards in the system. Newly created users can search for their own cards only. Searching for cards will take user to page only showing the JSON output from the api request just for simplicity of the frontend. Search will return a list of cards that contain the string the user is filtering by.  
 
 
-###Architecture
+### Architecture
+
 Application was designed along the Hexagonal Architecture Pattern. Main advantages in using this pattern are separation of concerns since logic is split into different layers of the application. This for me offers a lot more control and easier testing as well.
 
