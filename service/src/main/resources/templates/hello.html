@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
 >
 <head>
   <title>Main page</title>
@@ -9,5 +9,15 @@
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="Sign Out"/>
 </form>
+<form action="/search">
+  <button type="submit">Search Cards</button>
+</form><br><br>
+<form th:action="@{/card}" method="post">
+  <div><label> Name: <input type="text" name="name"/> </label></div>
+  <div><label> Number: <input type="text" name="number"/> </label></div>
+  <div><label> Expiry: <input type="text" name="expiry"/> </label></div>
+  <div><input type="submit" value="Create Card"/></div>
+</form>
+
 </body>
 </html>

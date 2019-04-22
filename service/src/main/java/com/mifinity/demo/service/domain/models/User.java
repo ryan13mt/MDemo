@@ -1,4 +1,4 @@
-package com.mifinity.demo.service.domain;
+package com.mifinity.demo.service.domain.models;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -7,16 +7,25 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     private String username;
@@ -25,6 +34,14 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserType type;
+
+    public User(@NotNull String username,
+                @NotNull String password,
+                @NotNull UserType userType) {
+        this.username = username;
+        this.password = new BCryptPasswordEncoder().encode(password);
+        this.type = userType;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,4 +77,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

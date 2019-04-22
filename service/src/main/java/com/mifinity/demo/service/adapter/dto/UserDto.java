@@ -1,5 +1,6 @@
-package com.mifinity.demo.api.adapter.dto;
+package com.mifinity.demo.service.adapter.dto;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,11 +17,14 @@ import lombok.Setter;
 public class UserDto {
 
     @NotNull
-    private String userName;
+    @NotEmpty
+    private String username;
 
     @NotNull
+    @NotEmpty
     private String password;
 
     @NotNull
-    private String passwordConfirmation;
+    @NotEmpty
+    private String confirmPassword;
 }

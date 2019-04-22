@@ -1,68 +1,80 @@
 databaseChangeLog:
-  - changeSet:
-      id: taskId-1
-      author: ryan.cassar
-      changes:
-        - createTable:
+- changeSet:
+    id: taskId-1
+    author: ryan.cassar
+    changes:
+    - createTable:
+        tableName: user
+        columns:
+        - column:
+            name: id
+            type: UUID
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: username
+            type: VARCHAR(30)
+            constraints:
+              unique: true
+              nullable: false
+        - column:
+            name: password
+            type: VARCHAR(100)
+            constraints:
+              nullable: false
+        - column:
+            name: type
+            type: VARCHAR(30)
+            constraints:
+              nullable: true
+
+    - createTable:
+        tableName: card
+        columns:
+        - column:
+            name: id
+            type: UUID
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: VARCHAR(30)
+            constraints:
+              nullable: false
+        - column:
+            name: account_id
+            type: UUID
+            constraints:
+              nullable: false
+        - column:
+            name: number
+            type: VARCHAR(30)
+            constraints:
+              unique: true
+              nullable: false
+        - column:
+            name: expiry
+            type: VARCHAR(5)
+            constraints:
+              nullable: false
+
+        - addPrimaryKey:
+            columnNames: username
+            constraintName: pk_username
             tableName: user
-            columns:
-              - column:
-                  name: id
-                  type: UUID
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: username
-                  type: VARCHAR(30)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: VARCHAR(100)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: type
-                  type: VARCHAR(30)
-                  constraints:
-                    nullable: true
 
-        - createTable:
+        - addPrimaryKey:
+            columnNames: number
+            constraintName: pk_card_number
             tableName: card
-            columns:
-              - column:
-                  name: id
-                  type: UUID
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: VARCHAR(30)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: accountId
-                  type: UUID
-                  constraints:
-                    nullable: false
-              - column:
-                  name: number
-                  type: VARCHAR(30)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: expiry_date
-                  type: DATE
-                  constraints:
-                    nullable: false
 
-        - addForeignKeyConstraint:
-            baseColumnNames: accountId
-            baseTableName: card
-            constraintName: fk_card_user
-            onDelete: restrict
-            onUpdate: restrict
-            referencedColumnNames: id
-            referencedTableName: user
+    - addForeignKeyConstraint:
+        baseColumnNames: account_id
+        baseTableName: card
+        constraintName: fk_card_user
+        onDelete: restrict
+        onUpdate: restrict
+        referencedColumnNames: id
+        referencedTableName: user

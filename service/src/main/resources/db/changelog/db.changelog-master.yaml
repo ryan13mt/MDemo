@@ -1,10 +1,10 @@
 databaseChangeLog:
-  - include:
-      file: db/changelog/changesets/initial-demo-setup.yaml
+- include:
+    file: db/changelog/changesets/initial-demo-setup.yaml
 
 
 
 
-  # Initial data - leave always last
-  - include:
-      file: db/init/wowcat-games-init-schema.yaml
+# Initial data - leave always last
+- include:
+    file: db/init/init-data.yaml

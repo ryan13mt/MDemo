@@ -27,7 +27,7 @@ spring:
 database:
   schema: demo
 
-debug: true
+debug: false
 logging:
   level:
     com.*: trace
