@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,7 +24,7 @@ public class UserService implements UserDetailsService {
     public User createUser(@Valid @NotNull final User user) {
         try {
             loadUserByUsername(user.getUsername().toLowerCase());
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return userDao.createUser(user);
         }
         throw new IllegalStateException("Username already exists");
