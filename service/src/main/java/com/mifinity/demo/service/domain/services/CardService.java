@@ -20,7 +20,7 @@ public class CardService {
         return cardDao.findByNumberEquals(number);
     }
 
-    public Card save(@Valid @NotNull final Card card) {
+    public Card createOrUpdate(@Valid @NotNull final Card card) {
         final Optional<Card> optionalExistingCard = findByNumberEquals(card.getNumber());
 
         if (optionalExistingCard.isPresent()) {

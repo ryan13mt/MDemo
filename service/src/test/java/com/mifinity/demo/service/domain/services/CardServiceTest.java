@@ -32,7 +32,7 @@ public class CardServiceTest {
         final Card card = CardTestWrapper.buildValidAndNewWithAccountIdAndCardNumber(UUID.randomUUID(), "1").unwrap();
         given(cardDao.save(any(Card.class))).willReturn(card);
 
-        final Card savedCard = sut.save(card);
+        final Card savedCard = sut.createOrUpdate(card);
 
         assertThat(savedCard).isEqualTo(card);
 
@@ -56,7 +56,7 @@ public class CardServiceTest {
         given(cardDao.save(any(Card.class))).willReturn(newCard);
         given(cardDao.findByNumberEquals(any())).willReturn(Optional.of(oldCard));
 
-        final Card savedCard = sut.save(newCard);
+        final Card savedCard = sut.createOrUpdate(newCard);
 
         assertThat(savedCard.getId()).isEqualTo(oldCard.getId());
 

@@ -9,7 +9,6 @@ import com.mifinity.demo.service.domain.models.User;
 import com.mifinity.demo.service.domain.models.UserType;
 import com.mifinity.demo.service.domain.services.CardService;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -34,15 +33,15 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public CardDto create(@AuthenticationPrincipal final Authentication authentication,
-                          @Valid @NotNull final CardDto card) {
+    @ResponseStatus(code = HttpStatus.OK)
+    public CardDto createOrUpdate(@AuthenticationPrincipal final Authentication authentication,
+                                  @Valid @NotNull final CardDto card) {
         final UUID accountId = ((User) authentication.getPrincipal()).getId();
 
-        final Card newCard = cardService.save(new Card(card.getName(),
-                                                       accountId,
-                                                       card.getNumber(),
-                                                       card.getExpiry()));
+        final Card newCard = cardService.createOrUpdate(new Card(card.getName(),
+                                                                 accountId,
+                                                                 card.getNumber(),
+                                                                 card.getExpiry()));
         return new CardDto(newCard.getName(),
                            newCard.getAccountId(),
                            newCard.getNumber(),

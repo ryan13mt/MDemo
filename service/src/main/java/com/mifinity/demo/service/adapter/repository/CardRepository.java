@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CardRepository extends JpaRepository<Card, String> {
 
-    Card save(final Card card);
-
     Optional<Card> findByNumberEquals(final String cardNumberFilter);
 
     List<Card> findAllByNumberContaining(final String cardNumberFilter);

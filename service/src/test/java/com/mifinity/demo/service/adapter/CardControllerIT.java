@@ -44,7 +44,7 @@ public class CardControllerIT {
 
         final Card card = CardTestWrapper.buildValidAndNewWithAccountId(userForAuthentication.getId()).unwrap();
 
-        when(cardService.save(any(Card.class))).thenReturn(card);
+        when(cardService.createOrUpdate(any(Card.class))).thenReturn(card);
 
         this.mockMvc.perform(post("/card")
                                  .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -52,9 +52,9 @@ public class CardControllerIT {
                                  .param("number", card.getNumber())
                                  .param("expiry", card.getExpiry())
                                  .principal(testingAuthenticationToken))
-            .andExpect(status().isCreated());
+            .andExpect(status().isOk());
 
-        verify(cardService, times(1)).save(any(Card.class));
+        verify(cardService, times(1)).createOrUpdate(any(Card.class));
     }
 
     @Test
