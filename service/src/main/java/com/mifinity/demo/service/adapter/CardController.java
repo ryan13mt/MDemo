@@ -9,7 +9,7 @@ import com.mifinity.demo.service.domain.models.User;
 import com.mifinity.demo.service.domain.models.UserType;
 import com.mifinity.demo.service.domain.services.CardService;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -36,12 +36,18 @@ public class CardController {
     @ResponseStatus(code = HttpStatus.OK)
     public CardDto createOrUpdate(@AuthenticationPrincipal final Authentication authentication,
                                   @Valid @NotNull final CardDto card) {
-        final UUID accountId = ((User) authentication.getPrincipal()).getId();
+        final User user = (User) authentication.getPrincipal();
+        final Optional<Card> optionalCard = cardService.findByNumberEquals(card.getNumber());
+
+        if (isNormalUser(user) && (optionalCard.isPresent() && !optionalCard.get().getAccountId().equals(user.getId()))) {
+            throw new IllegalStateException("User must have Admin rights to update another users card.");
+        }
 
         final Card newCard = cardService.createOrUpdate(new Card(card.getName(),
-                                                                 accountId,
+                                                                 user.getId(),
                                                                  card.getNumber(),
                                                                  card.getExpiry()));
+
         return new CardDto(newCard.getName(),
                            newCard.getAccountId(),
                            newCard.getNumber(),
@@ -54,7 +60,7 @@ public class CardController {
         final User user = (User) authentication.getPrincipal();
         final CardFilter cardFilter = CardFilter.builder().cardNumberFilter(cardNumberFilter).build();
 
-        if (user.getType() == null || !user.getType().equals(UserType.ADMIN)) {
+        if (isNormalUser(user)) {
             cardFilter.setAccountId(user.getId());
             return transformCardToCardDto(cardService.filterCardsForUser(cardFilter));
         }
@@ -69,5 +75,9 @@ public class CardController {
                                                          card.getAccountId(),
                                                          card.getNumber(),
                                                          card.getExpiry())).collect(Collectors.toList());
+    }
+
+    private boolean isNormalUser(final User user) {
+        return user.getType() == null || !user.getType().equals(UserType.ADMIN);
     }
 }

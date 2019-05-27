@@ -28,9 +28,7 @@ Successfully loging in will take user to main page. This includes a form to crea
 After creating new card successfully, please go back to the previous page to continue.
 
 #### Update Card
-Creating a new card with the same exact number as a card that is already in the system will update the expiry to the one entered last.
-
-Please note: At the last moment I remembered a check that can be included for a user to not be able to update a card that is not his. This can easily be done since we have the old card that contains the owner id and the update request has the principal which we can get the id of the person doing the call. If these are different we then check if the user is an admin and if yes still update the card. If not an admin, the call will be rejected.
+Creating a new card with the same exact number as a card that is already in the system will update the expiry to the one entered last. User can only update his cards unless being done by an Admin.
 
 #### Search Card
 Clicking 'Search Cards' will take user to another page where a search field can be used to search for cards. Admin can view all cards in the system. Newly created users can search for their own cards only. Searching for cards will take user to page only showing the JSON output from the api request just for simplicity of the frontend. Search will return a list of cards that contain the string the user is filtering by.  
